@@ -1,8 +1,9 @@
 
 from sqlalchemy import Integer, String
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from Base import Base
+from RoomBooking import RoomBooking
 
 class AdministrativeStaff(Base):
     # Specify table name
@@ -23,4 +24,10 @@ class AdministrativeStaff(Base):
 
     last_name: Mapped[str] = mapped_column(
         "LastName", String(100), nullable=False
+    )
+
+    # Define relationship to RoomBooking (1:N)
+    room_bookings: Mapped[list["RoomBooking"]] = relationship(
+        "RoomBooking",
+        back_populates="staff"
     )

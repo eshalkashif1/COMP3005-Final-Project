@@ -1,9 +1,9 @@
 
 from sqlalchemy import Integer, String, CheckConstraint
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from Base import Base
-
+from RoomBooking import RoomBooking
 
 class Room(Base):
     # Specify table name
@@ -28,4 +28,10 @@ class Room(Base):
             "RoomCapacity > 0",
             name="check_room_capacity_positive"
         ),
+    )
+
+    # Define relationship to RoomBooking (1:N)
+    room_bookings: Mapped[list["RoomBooking"]] = relationship(
+        "RoomBooking",
+        back_populates="room"
     )
